@@ -2,6 +2,8 @@
 
 ## Release 1.x
 
+- [ ] Make the central Alexandro.Net docs staging tool preserve legacy roots
+  and regenerate the aggregate sitemap before allowing full `--delete` syncs.
 - [ ] Configure npm trusted publishing and GitHub OIDC provenance before the
   next public release.
 - [ ] Publish cross-language RFC 8785 interoperability vectors.

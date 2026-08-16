@@ -20,6 +20,9 @@
 - Publish one validated tarball to Verdaccio and public npm; never rebuild
   between registries.
 - Do not publish until local tests, clean installs, GitHub CI, and CodeQL pass.
+- Deploy this documentation directory with a targeted rsync. The central
+  staging script does not currently reproduce every legacy docs root or the
+  aggregate sitemap, so it must not be synced to production with `--delete`.
 - Record every release, incident, and operational decision in this file.
 
 ## 2026-08-16 - Product selection
@@ -117,3 +120,20 @@ used only as a development dependency and behavioral reference.
 - The first public release has a verified npm registry signature. It was
   published with the authenticated npm CLI, so it does not claim GitHub OIDC
   provenance; trusted publishing is a future release-engineering improvement.
+
+## 2026-08-16 - Documentation mirror safeguard
+
+- A full central staging sync exposed that
+  `/storage/data/github/revivejs/tools/stage-alexandro-docs.mjs` omits the
+  legacy `ai/` and nested `docs/` roots and does not generate the aggregate
+  `sitemap.xml`.
+- Those omitted paths were restored from the local canonical mirror at
+  `/var/www/html/alexandro.net_docs` immediately after detection. The restored
+  nested docs tree contains 4,977 files and the AI tree contains 7 files.
+- The aggregate sitemap was restored, validated as XML, and extended with the
+  public Deepmerge and Stable Stringify documentation URLs.
+- Public checks return HTTP 200 for `/docs/ai/`, `/docs/sitemap.xml`, the new
+  Stable Stringify docs, and sampled existing Angular, React, and Vanilla docs.
+- Future deployments for this project must sync only
+  `vanilla/stable-stringify/` plus intentional index or sitemap files until the
+  central staging tool preserves every production-owned root.
