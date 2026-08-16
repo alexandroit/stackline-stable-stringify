@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@stackline/stable-stringify - Deterministic and canonical JSON</title>
+    <meta name="description" content="Deterministic JSON serialization, safe diagnostics, and RFC 8785 canonical JSON in one zero-dependency package.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <link rel="canonical" href="https://alexandro.net/docs/vanilla/stable-stringify/">
+    <link rel="alternate" type="text/plain" href="./llms.txt" title="LLM summary">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@stackline/stable-stringify">
+    <meta property="og:description" content="Stable, safe, and RFC 8785 canonical JSON without runtime dependencies.">
+    <meta property="og:url" content="https://alexandro.net/docs/vanilla/stable-stringify/">
+    <meta property="og:image" content="https://alexandro.net/docs/vanilla/stable-stringify/assets/stable-stringify-structure.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#08775b">
+    <link rel="icon" type="image/webp" href="./assets/stable-stringify-structure.webp">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "@stackline/stable-stringify",
+        "description": "Deterministic JSON serialization, safe diagnostics, and RFC 8785 canonical JSON.",
+        "codeRepository": "https://github.com/alexandroit/stackline-stable-stringify",
+        "downloadUrl": "https://www.npmjs.com/package/@stackline/stable-stringify",
+        "license": "https://opensource.org/license/mit",
+        "programmingLanguage": ["JavaScript", "TypeScript"],
+        "runtimePlatform": ["Node.js", "Web browser", "Deno", "Bun"],
+        "keywords": "stable JSON, deterministic serialization, RFC 8785, canonical JSON, circular JSON",
+        "author": {
+          "@type": "Person",
+          "name": "Alexandro Paixao Marques",
+          "url": "https://github.com/alexandroit"
+        }
+      }
+    </script>
+    <script defer src="./index.min.js"></script>
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#playground">Skip to playground</a>
+
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="@stackline/stable-stringify documentation home">
+        <span class="brand-mark" aria-hidden="true">{ }</span>
+        <span>@stackline/stable-stringify</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#api">API</a>
+        <a href="https://github.com/alexandroit/stackline-stable-stringify">GitHub</a>
+        <a href="https://www.npmjs.com/package/@stackline/stable-stringify">npm</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-content">
+          <p class="eyebrow">One serializer. Three contracts.</p>
+          <h1 id="page-title">@stackline/stable-stringify</h1>
+          <p class="hero-copy">
+            Deterministic JSON for cache keys, safe output for diagnostics,
+            and RFC 8785 canonical bytes for signatures.
+          </p>
+          <div class="install-row">
+            <code>npm install @stackline/stable-stringify</code>
+            <button class="copy-button" type="button" data-copy="npm install @stackline/stable-stringify" title="Copy install command" aria-label="Copy install command">Copy</button>
+          </div>
+          <p class="release-line">
+            <span id="package-version">v1.0.0</span>
+            <span>Zero runtime dependencies</span>
+            <span>Node 14.17+</span>
+          </p>
+        </div>
+      </section>
+
+      <section class="playground-band" id="playground" aria-labelledby="playground-title">
+        <div class="section-inner wide">
+          <div class="section-heading tool-heading">
+            <div>
+              <p class="eyebrow">Production bundle</p>
+              <h2 id="playground-title">Serialization playground</h2>
+            </div>
+            <div class="tool-actions" aria-label="Playground actions">
+              <button class="icon-button" id="reset-button" type="button" title="Reset playground" aria-label="Reset playground"><span aria-hidden="true">&#8635;</span></button>
+              <button class="secondary-button" id="share-button" type="button">Copy link</button>
+            </div>
+          </div>
+
+          <div class="control-bar">
+            <label class="preset-control">
+              <span>Preset</span>
+              <select id="preset-select">
+                <option value="cache">Cache key</option>
+                <option value="circular">Circular graph</option>
+                <option value="bigint">BigInt event</option>
+                <option value="canonical">RFC 8785 vector</option>
+                <option value="unicode">Unicode ordering</option>
+                <option value="getter">Throwing getter</option>
+                <option value="limit">Depth limit</option>
+              </select>
+            </label>
+
+            <fieldset class="segmented-control mode-control">
+              <legend>Mode</legend>
+              <button type="button" data-mode="stable" aria-pressed="true">Stable</button>
+              <button type="button" data-mode="safe" aria-pressed="false">Safe</button>
+              <button type="button" data-mode="canonical" aria-pressed="false">RFC 8785</button>
+            </fieldset>
+
+            <label>
+              <span>Cycles</span>
+              <select id="cycle-select">
+                <option value="throw">Throw</option>
+                <option value="marker">Marker</option>
+                <option value="path">Path</option>
+                <option value="null">Null</option>
+              </select>
+            </label>
+
+            <label>
+              <span>BigInt</span>
+              <select id="bigint-select">
+                <option value="throw">Throw</option>
+                <option value="string">String</option>
+                <option value="number">Safe number</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Accessors</span>
+              <select id="accessor-select">
+                <option value="invoke">Invoke</option>
+                <option value="omit">Omit</option>
+                <option value="throw">Throw</option>
+              </select>
+            </label>
+
+            <label class="toggle-control">
+              <span>Formatting</span>
+              <span class="toggle-line">
+                <input id="indent-toggle" type="checkbox">
+                <span>Indent</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="limit-bar">
+            <label>
+              <span>Max depth</span>
+              <input id="max-depth" type="number" min="0" step="1" value="100" inputmode="numeric">
+            </label>
+            <label>
+              <span>Max entries</span>
+              <input id="max-entries" type="number" min="0" step="1" value="100000" inputmode="numeric">
+            </label>
+            <label>
+              <span>Max length</span>
+              <input id="max-length" type="number" min="0" step="1" value="1000000" inputmode="numeric">
+            </label>
+            <button class="primary-button" id="serialize-button" type="button">Serialize</button>
+          </div>
+
+          <div class="editor-grid">
+            <section class="editor-panel" aria-labelledby="input-label">
+              <header>
+                <h3 id="input-label">Input</h3>
+                <span>JSON + playground tags</span>
+              </header>
+              <textarea id="value-input" spellcheck="false" aria-label="Input JSON"></textarea>
+            </section>
+
+            <section class="editor-panel output-panel" aria-labelledby="result-label">
+              <header>
+                <h3 id="result-label">Output</h3>
+                <button class="text-button" id="copy-result-button" type="button">Copy</button>
+              </header>
+              <pre id="result-output" tabindex="0" aria-live="polite"></pre>
+            </section>
+          </div>
+
+          <div class="status-bar" role="status" aria-live="polite">
+            <span class="status-indicator" id="status-indicator" aria-hidden="true"></span>
+            <span id="status-text">Ready</span>
+            <span class="status-separator" aria-hidden="true"></span>
+            <span id="timing-text">0.000 ms</span>
+            <span class="status-separator" aria-hidden="true"></span>
+            <span id="size-text">0 characters</span>
+            <span class="status-spacer"></span>
+            <span id="mode-status">Stable</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-band" id="install" aria-labelledby="migration-title">
+        <div class="section-inner content-grid">
+          <div>
+            <p class="eyebrow">Lowest-change adoption</p>
+            <h2 id="migration-title">Keep existing imports</h2>
+            <p>
+              Use an npm alias to preserve the established package name and
+              function signature while gaining the maintained distribution.
+            </p>
+          </div>
+          <div class="code-surface">
+            <pre><code>npm install fast-json-stable-stringify@npm:@stackline/stable-stringify</code></pre>
+            <pre><code>import stringify from 'fast-json-stable-stringify';
+
+const key = stringify({ z: 1, a: 2 });</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-band contrast" aria-labelledby="contracts-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Purpose-built policies</p>
+              <h2 id="contracts-title">Choose the contract at the call site</h2>
+            </div>
+          </div>
+          <div class="contract-grid">
+            <article>
+              <span class="contract-index">01</span>
+              <h3>Stable</h3>
+              <p>Compatible deterministic output for cache keys, snapshots, deduplication, and reproducible builds.</p>
+              <code>stringify(value, options)</code>
+            </article>
+            <article>
+              <span class="contract-index coral">02</span>
+              <h3>Safe</h3>
+              <p>Bounded cycle and BigInt handling for logs, diagnostics, and failure paths that must remain observable.</p>
+              <code>safeStringify(value)</code>
+            </article>
+            <article>
+              <span class="contract-index blue">03</span>
+              <h3>Canonical</h3>
+              <p>Strict RFC 8785 strings and UTF-8 bytes for signatures, hashes, and cross-system verification.</p>
+              <code>canonicalizeBytes(value)</code>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-band muted" id="api" aria-labelledby="api-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Public contract</p>
+              <h2 id="api-title">Small surface, explicit behavior</h2>
+            </div>
+            <a class="inline-link" href="https://github.com/alexandroit/stackline-stable-stringify#api">Full reference</a>
+          </div>
+          <div class="api-table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Export</th><th>Purpose</th><th>Failure behavior</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>stableStringify(value, options?)</code></td><td>Deterministic JSON</td><td>Compatible throws and omission</td></tr>
+                <tr><td><code>safeStringify(value, replacer?, space?, options?)</code></td><td>Bounded diagnostics</td><td>Controlled fallback by default</td></tr>
+                <tr><td><code>canonicalize(value, options?)</code></td><td>RFC 8785 string</td><td>Rejects non-I-JSON input</td></tr>
+                <tr><td><code>canonicalizeBytes(value, options?)</code></td><td>Canonical UTF-8 bytes</td><td>Rejects non-I-JSON input</td></tr>
+                <tr><td><code>configure(defaults?)</code></td><td>Reusable stable serializer</td><td>Validates options immediately</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-band" aria-labelledby="proof-title">
+        <div class="section-inner proof-grid">
+          <div>
+            <p class="eyebrow">Release evidence</p>
+            <h2 id="proof-title">Compatibility is executable</h2>
+          </div>
+          <dl class="proof-list">
+            <div><dt>30,000</dt><dd>differential reference serializations</dd></div>
+            <div><dt>100%</dt><dd>statement, line, and function coverage</dd></div>
+            <div><dt>25,000</dt><dd>nested levels in the stack-safety regression</dd></div>
+            <div><dt>3.9-7.0</dt><dd>TypeScript compatibility matrix</dd></div>
+            <div><dt>&lt;12 KB</dt><dd>minified browser bundle before compression</dd></div>
+            <div><dt>0</dt><dd>runtime dependencies</dd></div>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <strong>@stackline/stable-stringify</strong>
+        <span>MIT licensed. Independent implementation.</span>
+      </div>
+      <nav aria-label="Footer navigation">
+        <a href="https://github.com/alexandroit/stackline-stable-stringify/blob/main/SECURITY.md">Security</a>
+        <a href="https://github.com/alexandroit/stackline-stable-stringify/blob/main/CHANGELOG.md">Changelog</a>
+        <a href="./llms-full.txt">LLM reference</a>
+      </nav>
+    </footer>
+  </body>
+</html>

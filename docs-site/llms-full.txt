@@ -1,0 +1,95 @@
+# @stackline/stable-stringify full reference
+
+Package: @stackline/stable-stringify
+Version: 1.0.0
+License: MIT
+Runtime dependencies: 0
+Node.js: 14.17+
+TypeScript tested: 3.9, 4.7, 4.9, 5.9, 6.0, 7.0
+
+## Installation
+
+npm install @stackline/stable-stringify
+
+To preserve an existing package name:
+
+npm install fast-json-stable-stringify@npm:@stackline/stable-stringify
+
+## ESM
+
+import stringify, {
+  canonicalize,
+  canonicalizeBytes,
+  configure,
+  safeStringify,
+  stableStringify
+} from '@stackline/stable-stringify';
+
+## CommonJS
+
+const stringify = require('@stackline/stable-stringify');
+stringify(value);
+stringify.safeStringify(value);
+stringify.canonicalize(value);
+
+## Stable mode
+
+Object keys are sorted recursively by UTF-16 code units. Arrays preserve input
+order. The default behavior is tested against fast-json-stable-stringify 2.1.0
+with 30,000 deterministic differential cases.
+
+Stable options:
+
+- cmp: comparator receiving { key, value } records.
+- cycles: compatible boolean cycle marker shortcut.
+- onCycle: throw, marker, path, or null.
+- cycleValue: custom marker string.
+- bigint: throw, string, or safe number.
+- replacer: function or property list.
+- space: JSON-style indentation.
+- accessors: invoke, omit, or throw.
+- toJSON: enable or disable hooks.
+- maxDepth: maximum container nesting.
+- maxEntries: maximum object keys and array positions.
+- maxLength: maximum UTF-16 output length.
+
+Stable mode uses unlimited resource defaults for compatibility. Apply explicit
+limits at trust boundaries.
+
+## Safe mode
+
+safeStringify defaults to BigInt strings, [Circular] markers, maxDepth 100,
+maxEntries 100000, and maxLength 1000000. depthLimit and edgesLimit are
+accepted aliases. Traversal errors return a controlled JSON string unless
+throwOnError is true.
+
+## Canonical mode
+
+canonicalize follows RFC 8785 and I-JSON constraints. It rejects non-finite
+numbers, BigInt, undefined, functions, symbols, malformed Unicode, sparse
+arrays, accessors, classes, symbol members, and cycles. It does not invoke
+getters or toJSON. canonicalizeBytes returns UTF-8 bytes.
+
+Canonical defaults are maxDepth 1000, maxEntries 100000, and maxLength
+16777216. Infinity can be explicitly supplied.
+
+## Errors
+
+StableStringifyLimitError extends RangeError and exposes code, kind, limit,
+and path. CanonicalizationError extends TypeError and exposes code, reason,
+and path.
+
+## Distribution
+
+- ESM: dist/index.js
+- CommonJS: dist/index.cjs
+- Browser: dist/index.min.js, global StacklineStableStringify
+- Types: dist/index.d.mts, dist/index.d.cts, dist/index.d.ts
+
+## Canonical links
+
+Documentation: https://alexandro.net/docs/vanilla/stable-stringify/
+npm: https://www.npmjs.com/package/@stackline/stable-stringify
+Repository: https://github.com/alexandroit/stackline-stable-stringify
+Security: https://github.com/alexandroit/stackline-stable-stringify/security/policy
+RFC 8785: https://www.rfc-editor.org/rfc/rfc8785.html

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alexandro.net/docs/vanilla/stable-stringify/sitemap.xml

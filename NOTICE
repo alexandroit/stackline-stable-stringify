@@ -1,0 +1,21 @@
+@stackline/stable-stringify
+Copyright (c) 2026 Alexandro Paixao Marques and contributors
+
+This package is an independent implementation. Its default public behavior is
+designed to support migration from fast-json-stable-stringify version 2.1.0,
+a separate MIT-licensed project originally authored by James Halliday and
+maintained by Evgeny Poberezkin and contributors:
+
+https://github.com/epoberezkin/fast-json-stable-stringify
+
+The upstream package is used only as a development dependency and behavioral
+reference in differential tests. Its source code is not bundled and it is not
+a runtime dependency.
+
+The package names "fast-json-stable-stringify", "safe-stable-stringify",
+"fast-safe-stringify", and "json-stringify-safe" are used descriptively in
+compatibility tests, benchmarks, and market research. This project is not
+affiliated with or endorsed by their maintainers.
+
+RFC 8785, JSON Canonicalization Scheme (JCS), is an Internet Engineering Task
+Force standards-track document. Standards references do not imply endorsement.

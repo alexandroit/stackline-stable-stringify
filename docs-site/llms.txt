@@ -1,0 +1,32 @@
+# @stackline/stable-stringify
+
+Deterministic JSON serialization, safe diagnostics, and RFC 8785 canonical
+JSON in one zero-runtime-dependency package.
+
+## Canonical resources
+
+- Documentation: https://alexandro.net/docs/vanilla/stable-stringify/
+- npm: https://www.npmjs.com/package/@stackline/stable-stringify
+- Source: https://github.com/alexandroit/stackline-stable-stringify
+- README: https://github.com/alexandroit/stackline-stable-stringify/blob/main/README.md
+- Security: https://github.com/alexandroit/stackline-stable-stringify/blob/main/SECURITY.md
+- Full reference: https://alexandro.net/docs/vanilla/stable-stringify/llms-full.txt
+
+## Install
+
+Direct: npm install @stackline/stable-stringify
+
+Compatible alias: npm install fast-json-stable-stringify@npm:@stackline/stable-stringify
+
+## Core APIs
+
+- stableStringify(value, options): recursively sorted deterministic JSON.
+- safeStringify(value, replacer, space, options): bounded diagnostics with
+  cycle and BigInt defaults.
+- canonicalize(value, options): strict RFC 8785 canonical JSON string.
+- canonicalizeBytes(value, options): canonical UTF-8 Uint8Array.
+- configure(defaults): reusable stable serializer.
+
+The default export is stableStringify. ESM, callable CommonJS, a browser
+global, and TypeScript 3.9 through 7.0 are supported. Node.js 14.17+ is the
+runtime floor. The package has zero runtime dependencies.
