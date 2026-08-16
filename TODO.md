@@ -2,6 +2,8 @@
 
 ## Release 1.x
 
+- [ ] Configure npm trusted publishing and GitHub OIDC provenance before the
+  next public release.
 - [ ] Publish cross-language RFC 8785 interoperability vectors.
 - [ ] Add Web Streams output without changing the synchronous API.
 - [ ] Evaluate a deterministic `Map` and `Set` conversion policy as opt-in.

@@ -52,21 +52,68 @@ used only as a development dependency and behavioral reference.
 - Node.js floor 14.17; TypeScript matrix 3.9 through 7.0.
 - Zero runtime dependencies.
 
-## Validation completed so far
+## Validation completed for 1.0.0
 
 - 32 source tests pass.
 - 30,000 deterministic reference comparisons pass.
-- Coverage is 100% statements, lines, and functions; 98.31% branches.
+- Coverage is 100% statements, lines, and functions; 99.01% branches.
 - A 25,000-level structure serializes without call-stack overflow.
 - The RFC 8785 primary example, Unicode ordering, number vectors, strict input
   failures, and UTF-8 fallback pass.
 - ESM, CommonJS, and browser bundle tests pass.
 - Clean tarball installs pass directly and under the compatibility alias.
-- `publint` passes.
+- The clean public-registry alias install passes in CommonJS and ESM.
+- `publint` and `@arethetypeswrong/cli` pass.
 - TypeScript 3.9.10, 4.7.4, 4.9.5, 5.9.3, 6.0.2, and 7.0.2 pass.
+- GitHub CI passes on Linux, macOS, Windows, Node.js 14.17 through 24, Deno 2,
+  Bun, and the complete TypeScript matrix.
+- GitHub CI run `31955842695` and CodeQL run `31955842692` passed for commit
+  `419bd2ae845bb0e8d5080f146d7c41c61b2b47e2`.
+- `npm audit` reports zero production vulnerabilities. The public tarball has
+  a verified npm registry signature.
+- Benchmark sample at 50,000 operations: native JSON 964,098 ops/s,
+  `fast-json-stable-stringify` 340,117 ops/s, stable mode 207,047 ops/s, safe
+  mode 200,690 ops/s, and canonical mode 160,391 ops/s. Native JSON is not a
+  deterministic-key-order replacement.
 
-## Release status
+## 2026-08-16 - Public release 1.0.0
 
-Version `1.0.0` is under validation. Verdaccio, GitHub, public npm, production
-documentation, release hashes, SBOM, CI run IDs, and CodeQL run IDs must be
-recorded here after they are verified.
+- Published `@stackline/stable-stringify@1.0.0` with the `latest` tag to the
+  local Verdaccio at `http://127.0.0.1:4873` and to the official public npm
+  registry.
+- Public npm package:
+  `https://www.npmjs.com/package/@stackline/stable-stringify`.
+- The package is public, has zero runtime dependencies, and installs directly
+  with `npm install @stackline/stable-stringify`.
+- The compatibility alias installs with
+  `npm install fast-json-stable-stringify@npm:@stackline/stable-stringify`.
+- Both registries serve the exact CI-built tarball. The public npm tarball was
+  downloaded anonymously and compared byte for byte with the retained
+  artifact.
+- Retained release directory:
+  `/storage/data/releases/stackline-stable-stringify/1.0.0-ci-31955842695`.
+- Tarball SHA-1:
+  `fbd98a810d65be5f75fa29d5f781faedcb6816d0`.
+- Tarball SHA-512:
+  `40f4bfe8e9991b2d57c30bc9cae3f92e1c21d3312b1028188403579532c3e09df585a1c649cb384508428880699ed828ea42c981f848c1e63f8b2eaf4b4ce2b5`.
+- npm integrity:
+  `sha512-QPS/6OmZGy1XwwvJyuP5Lhwh0zErECgYhANXlTLD4J31haHGScs4RQhCiIBpntgo6kLJgfhIweY/iy6vS0zitQ==`.
+- GitHub tag `v1.0.0` points to the exact tested commit `419bd2a`.
+- GitHub release:
+  `https://github.com/alexandroit/stackline-stable-stringify/releases/tag/v1.0.0`.
+- The GitHub release contains the exact npm tarball, portable `SHA512SUMS`,
+  and a CycloneDX SBOM.
+- Production documentation is deployed at
+  `https://alexandro.net/docs/vanilla/stable-stringify/` and registered in
+  `/storage/data/github/revivejs/tools/alexandro-docs.config.mjs`.
+- Production browser checks pass at 1440x1000 and 390x844 with no horizontal
+  overflow, console errors, page errors, or failed requests. All seven
+  playground presets execute with their intended success, controlled fallback,
+  or controlled rejection state.
+- Browser evidence is retained as `browser-validation.json`,
+  `docs-desktop.png`, and `docs-mobile.png` in the release directory.
+- The local documentation preview remains available at
+  `http://127.0.0.1:4174` while the current workstation session is running.
+- The first public release has a verified npm registry signature. It was
+  published with the authenticated npm CLI, so it does not claim GitHub OIDC
+  provenance; trusted publishing is a future release-engineering improvement.
