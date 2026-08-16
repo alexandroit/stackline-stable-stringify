@@ -55,11 +55,11 @@ used only as a development dependency and behavioral reference.
 - Node.js floor 14.17; TypeScript matrix 3.9 through 7.0.
 - Zero runtime dependencies.
 
-## Validation completed for 1.0.0
+## Current validation baseline (1.0.1)
 
-- 32 source tests pass.
+- 33 source tests pass.
 - 30,000 deterministic reference comparisons pass.
-- Coverage is 100% statements, lines, and functions; 99.01% branches.
+- Coverage is 100% statements, lines, and functions; 99.00% branches.
 - A 25,000-level structure serializes without call-stack overflow.
 - The RFC 8785 primary example, Unicode ordering, number vectors, strict input
   failures, and UTF-8 fallback pass.
@@ -70,8 +70,8 @@ used only as a development dependency and behavioral reference.
 - TypeScript 3.9.10, 4.7.4, 4.9.5, 5.9.3, 6.0.2, and 7.0.2 pass.
 - GitHub CI passes on Linux, macOS, Windows, Node.js 14.17 through 24, Deno 2,
   Bun, and the complete TypeScript matrix.
-- GitHub CI run `31955842695` and CodeQL run `31955842692` passed for commit
-  `419bd2ae845bb0e8d5080f146d7c41c61b2b47e2`.
+- GitHub CI run `31956876432` and CodeQL run `31956876602` passed for commit
+  `8c218cb2d9de6b4de9fabd989ecc42e568b7159d`.
 - `npm audit` reports zero production vulnerabilities. The public tarball has
   a verified npm registry signature.
 - Benchmark sample at 50,000 operations: native JSON 964,098 ops/s,
@@ -120,6 +120,41 @@ used only as a development dependency and behavioral reference.
 - The first public release has a verified npm registry signature. It was
   published with the authenticated npm CLI, so it does not claim GitHub OIDC
   provenance; trusted publishing is a future release-engineering improvement.
+
+## 2026-08-16 - Public release 1.0.1
+
+- The final adversarial review found that canonical object classification used
+  `Object.prototype.toString`, which could consult a non-enumerable
+  `Symbol.toStringTag` accessor, and that enumerable symbol properties were not
+  rejected on arrays.
+- Canonical validation no longer consults `Symbol.toStringTag`, does not invoke
+  the regression getter, and rejects enumerable symbols consistently on arrays
+  and objects. Stable mode, safe mode, public types, and import contracts are
+  unchanged.
+- Release automation no longer hardcodes versioned tarball names. Static HTML
+  and the full LLM reference render the version directly from `package.json`.
+- Published `@stackline/stable-stringify@1.0.1` as `latest` to Verdaccio and the
+  official public npm registry from the same CI-built bytes.
+- Retained release directory:
+  `/storage/data/releases/stackline-stable-stringify/1.0.1-ci-31956876432`.
+- Tarball SHA-1:
+  `7faa93ae1daabd4f3a9cdae068486817228b2578`.
+- Tarball SHA-512:
+  `5f29f9cc9148ece6e93a1b6ff5fe67e49c2099ee0119ce25444cd32001b7a77525b6a9b7c99c70fdb964825734e07580b4dd5655d3b59e226342604c4fff3a45`.
+- npm integrity:
+  `sha512-Xyn5zJFI7ObpOhtv9f5n5Jwgme4BGc4lREzTIAG3p3Ultqm3yZxw/blkglc04HWAtN1WVdO1niJjQmBMT/86RQ==`.
+- Anonymous npm download, local rebuild, and Verdaccio download all compared
+  byte for byte with the CI artifact. Direct and aliased clean installs pass in
+  CommonJS and ESM with zero production vulnerabilities and a verified npm
+  registry signature.
+- GitHub tag `v1.0.1` points to exact tested commit `8c218cb`; the release at
+  `https://github.com/alexandroit/stackline-stable-stringify/releases/tag/v1.0.1`
+  contains the tarball, portable `SHA512SUMS`, and CycloneDX SBOM.
+- Production documentation and the local preview now expose `v1.0.1`.
+  Production browser validation passed at 1440x1000 and 390x844 with all seven
+  presets, no horizontal overflow, and no console, page, or network failures.
+- Browser validation JSON and screenshots are retained beside the release
+  artifacts.
 
 ## 2026-08-16 - Documentation mirror safeguard
 
