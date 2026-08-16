@@ -1,7 +1,7 @@
 # @stackline/stable-stringify full reference
 
 Package: @stackline/stable-stringify
-Version: 1.0.0
+Version: {{PACKAGE_VERSION}}
 License: MIT
 Runtime dependencies: 0
 Node.js: 14.17+

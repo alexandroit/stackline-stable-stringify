@@ -1,6 +1,6 @@
 {
   "name": "@stackline/stable-stringify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Deterministic, cycle-aware JSON serialization with a fast-json-stable-stringify-compatible API and RFC 8785 canonicalization",
   "keywords": [
     "stable-stringify",

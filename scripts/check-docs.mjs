@@ -9,6 +9,7 @@ const app = await readFile(new URL('app.js', site), 'utf8');
 const robots = await readFile(new URL('robots.txt', site), 'utf8');
 const sitemap = await readFile(new URL('sitemap.xml', site), 'utf8');
 const llms = await readFile(new URL('llms.txt', site), 'utf8');
+const llmsFull = await readFile(new URL('llms-full.txt', site), 'utf8');
 const image = await stat(new URL('assets/stable-stringify-structure.jpg', site));
 const webp = await stat(new URL('assets/stable-stringify-structure.webp', site));
 const bundle = await stat(new URL('index.min.js', site));
@@ -16,6 +17,16 @@ const bundle = await stat(new URL('index.min.js', site));
 assert(metadata.name === packageJson.name, 'documentation package name is stale');
 assert(metadata.version === packageJson.version, 'documentation version is stale');
 assert(metadata.runtimeDependencies === 0, 'documentation dependency count is stale');
+assert(
+  html.includes(`<span id="package-version">v${packageJson.version}</span>`),
+  'static documentation version is stale'
+);
+assert(!html.includes('{{PACKAGE_VERSION}}'), 'documentation version token was not rendered');
+assert(
+  llmsFull.includes(`Version: ${packageJson.version}`),
+  'LLM reference version is stale'
+);
+assert(!llmsFull.includes('{{PACKAGE_VERSION}}'), 'LLM version token was not rendered');
 assert(
   html.includes('<link rel="canonical" href="https://alexandro.net/docs/vanilla/stable-stringify/">'),
   'canonical documentation URL is missing'

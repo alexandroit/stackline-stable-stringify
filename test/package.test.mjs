@@ -7,6 +7,9 @@ import vm from 'node:vm';
 import esmDefault, * as esm from '../dist/index.js';
 
 const require = createRequire(import.meta.url);
+const packageJson = JSON.parse(
+  await readFile(new URL('../package.json', import.meta.url), 'utf8')
+);
 
 test('CommonJS exposes a compatible callable export and modern helpers', () => {
   const commonjs = require('../dist/index.cjs');
@@ -64,7 +67,11 @@ test('distribution is small and carries the license banner', async () => {
   const minified = new URL('../dist/index.min.js', import.meta.url);
   const code = await readFile(minified, 'utf8');
   const info = await stat(minified);
-  assert.match(code, /^\/\*! @stackline\/stable-stringify v1\.0\.0 \| MIT \*\//);
+  assert.ok(
+    code.startsWith(
+      `/*! ${packageJson.name} v${packageJson.version} | ${packageJson.license} */`
+    )
+  );
   assert.equal(code.includes('eval('), false);
   assert.equal(code.includes('new Function'), false);
   assert.ok(info.size < 20000, `browser bundle is ${info.size} bytes`);

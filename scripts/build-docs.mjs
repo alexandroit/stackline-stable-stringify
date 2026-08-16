@@ -14,6 +14,15 @@ await cp(
   new URL('dist/index.min.js.map', root),
   new URL('index.min.js.map', output)
 );
+for (const file of ['index.html', 'llms-full.txt']) {
+  const fileUrl = new URL(file, output);
+  const template = await readFile(fileUrl, 'utf8');
+  await writeFile(
+    fileUrl,
+    template.split('{{PACKAGE_VERSION}}').join(packageJson.version),
+    'utf8'
+  );
+}
 await writeFile(
   new URL('package-meta.json', output),
   `${JSON.stringify(

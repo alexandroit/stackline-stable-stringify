@@ -160,7 +160,10 @@ function processValueTask(task, tasks, state) {
 
   enforceDepth(state, task.depth, task.path);
   const isArray = Array.isArray(value);
-  if (state.canonical && !isArray) validateCanonicalObject(value, task.path);
+  if (state.canonical) {
+    rejectEnumerableSymbols(value, task.path);
+    if (!isArray) validateCanonicalObject(value, task.path);
+  }
 
   state.ancestors.set(value, task.path);
   const frame = createContainerFrame(
@@ -277,7 +280,6 @@ function getObjectKeys(value, path, state) {
   }
 
   if (state.canonical) {
-    rejectEnumerableSymbols(value, path);
     for (const key of keys) {
       if (hasLoneSurrogate(key)) {
         throw new CanonicalizationError(
@@ -462,12 +464,6 @@ function readForComparator(object, key, path, state) {
 
 function validateCanonicalObject(value, path) {
   const prototype = Object.getPrototypeOf(value);
-  if (prototype !== null && objectToString.call(value) !== '[object Object]') {
-    throw new CanonicalizationError(
-      'only JSON objects and arrays can be canonicalized',
-      path
-    );
-  }
   if (prototype !== null && Object.getPrototypeOf(prototype) !== null) {
     throw new CanonicalizationError(
       'class instances must be converted to plain JSON objects',

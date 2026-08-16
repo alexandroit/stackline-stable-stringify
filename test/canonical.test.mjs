@@ -117,17 +117,35 @@ test('rejects cycles, sparse arrays, accessors, symbols, and class instances', (
   symbolObject[Symbol('visible')] = true;
   assert.throws(() => canonicalize(symbolObject), /symbol properties/);
 
+  const symbolArray = [1];
+  symbolArray[Symbol('visible')] = true;
+  assert.throws(() => canonicalize(symbolArray), /symbol properties/);
+
   class RecordValue {
     constructor() {
       this.value = 1;
     }
   }
   assert.throws(() => canonicalize(new RecordValue()), /class instances/);
-  assert.throws(() => canonicalize(new Date()), /only JSON objects/);
+  assert.throws(() => canonicalize(new Date()), /class instances/);
   assert.throws(
     () => canonicalize(Object.create({ inherited: true })),
     /class instances/
   );
+});
+
+test('does not invoke Symbol.toStringTag accessors during validation', () => {
+  let reads = 0;
+  const input = { value: 1 };
+  Object.defineProperty(input, Symbol.toStringTag, {
+    get() {
+      reads += 1;
+      throw new Error('must not run');
+    }
+  });
+
+  assert.equal(canonicalize(input), '{"value":1}');
+  assert.equal(reads, 0);
 });
 
 test('accepts null-prototype data objects and ignores non-enumerable fields', () => {

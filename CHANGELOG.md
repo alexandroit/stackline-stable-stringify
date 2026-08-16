@@ -3,6 +3,16 @@
 All notable changes are documented here. This project follows Semantic
 Versioning.
 
+## [1.0.1] - 2026-08-16
+
+### Fixed
+
+- Canonical object validation no longer consults `Symbol.toStringTag`, so a
+  non-enumerable accessor cannot run during strict validation.
+- Canonical arrays now reject enumerable symbol properties with the same
+  strict behavior as canonical objects.
+- Documentation versions are rendered from package metadata during builds.
+
 ## [1.0.0] - 2026-08-16
 
 ### Added
@@ -20,4 +30,5 @@ Versioning.
 - 30,000 differential cases against `fast-json-stable-stringify@2.1.0`.
 - Public documentation, security policy, CI matrix, and live playground.
 
+[1.0.1]: https://github.com/alexandroit/stackline-stable-stringify/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/alexandroit/stackline-stable-stringify/releases/tag/v1.0.0
