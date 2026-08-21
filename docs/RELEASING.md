@@ -28,7 +28,7 @@ Build once and retain one immutable tarball:
 version="$(node -p "require('./package.json').version")"
 mkdir -p "release/$version"
 npm pack --ignore-scripts --pack-destination "release/$version"
-sha512sum "release/$version"/*.tgz > "release/$version/SHA512SUMS"
+(cd "release/$version" && sha512sum *.tgz > SHA512SUMS)
 npm sbom --omit=dev --sbom-format cyclonedx > "release/$version/sbom.cdx.json"
 ```
 
