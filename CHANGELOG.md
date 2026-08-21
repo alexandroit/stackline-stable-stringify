@@ -3,6 +3,24 @@
 All notable changes are documented here. This project follows Semantic
 Versioning.
 
+## [1.0.2] - 2026-08-21
+
+### Added
+
+- Executable examples for deterministic cache keys, RFC 8785 content digests,
+  and bounded cyclic logging.
+- Adoption guidance for direct installs, npm aliases, safe diagnostics, and
+  canonical signatures.
+- Reproducible benchmark methodology and Stackline package catalog link.
+- First-party documentation analytics that never records serialized input.
+- Trusted-publishing workflow for provenance-enabled future releases.
+
+### Changed
+
+- Package tarballs now include the public guides and executable examples.
+
+No runtime API or declaration behavior changed in this release.
+
 ## [1.0.1] - 2026-08-16
 
 ### Fixed
@@ -32,3 +50,4 @@ Versioning.
 
 [1.0.1]: https://github.com/alexandroit/stackline-stable-stringify/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/alexandroit/stackline-stable-stringify/releases/tag/v1.0.0
+[1.0.2]: https://github.com/alexandroit/stackline-stable-stringify/compare/v1.0.1...v1.0.2

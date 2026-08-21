@@ -264,6 +264,16 @@ on the same payload. Native JSON is shown only as a throughput baseline; it
 does not recursively sort object keys. Measure with representative production
 data before selecting limits or modes.
 
+## Adoption resources
+
+- [Stable, safe, canonical, and drop-in adoption guide](docs/ADOPTION.md)
+- [Reproducible benchmark methodology](docs/BENCHMARKS.md)
+- [Executable examples](examples)
+- [Stackline open-source catalog](https://alexandro.net/docs/open-source/)
+
+The examples ship in the npm tarball and cover deterministic cache keys,
+canonical content digests, and bounded logging of cyclic BigInt data.
+
 ## Verification
 
 Every release runs:

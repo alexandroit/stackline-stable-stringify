@@ -6,6 +6,8 @@ JSON in one zero-runtime-dependency package.
 ## Canonical resources
 
 - Documentation: https://alexandro.net/docs/vanilla/stable-stringify/
+- Portfolio catalog: https://alexandro.net/docs/open-source/
+- Selection guide: https://alexandro.net/docs/open-source/guides/stable-json/
 - npm: https://www.npmjs.com/package/@stackline/stable-stringify
 - Source: https://github.com/alexandroit/stackline-stable-stringify
 - README: https://github.com/alexandroit/stackline-stable-stringify/blob/main/README.md

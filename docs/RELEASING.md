@@ -25,10 +25,11 @@ Run the benchmark for regression evidence, not as a pass/fail release gate.
 Build once and retain one immutable tarball:
 
 ```bash
-mkdir -p release/1.0.0
-npm pack --ignore-scripts --pack-destination release/1.0.0
-sha512sum release/1.0.0/*.tgz > release/1.0.0/SHA512SUMS
-npm sbom --omit=dev --sbom-format cyclonedx > release/1.0.0/sbom.cdx.json
+version="$(node -p "require('./package.json').version")"
+mkdir -p "release/$version"
+npm pack --ignore-scripts --pack-destination "release/$version"
+sha512sum "release/$version"/*.tgz > "release/$version/SHA512SUMS"
+npm sbom --omit=dev --sbom-format cyclonedx > "release/$version/sbom.cdx.json"
 ```
 
 Run `scripts/smoke-install.mjs` against the retained path. The same bytes must
@@ -39,8 +40,10 @@ be published to Verdaccio and public npm.
 1. publish the retained tarball to Verdaccio;
 2. install directly and through the compatibility alias;
 3. compare tarball integrity and run smoke tests;
-4. publish the same tarball to public npm;
-5. download it from npm and compare SHA-512;
+4. run `publish.yml` with the expected SHA-512; the trusted workflow rebuilds
+   the reviewed commit and stops unless its tarball is byte-identical;
+5. let the workflow publish with npm provenance, then download it and compare
+   SHA-512;
 6. verify `latest`, provenance metadata, dependency audit, and registry
    signature where available.
 
