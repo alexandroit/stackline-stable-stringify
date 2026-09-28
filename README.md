@@ -1,9 +1,19 @@
 # @stackline/stable-stringify
 
-[![npm version](https://img.shields.io/npm/v/%40stackline%2Fstable-stringify)](https://www.npmjs.com/package/@stackline/stable-stringify)
-[![CI](https://github.com/alexandroit/stackline-stable-stringify/actions/workflows/ci.yml/badge.svg)](https://github.com/alexandroit/stackline-stable-stringify/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/alexandroit/stackline-stable-stringify/actions/workflows/codeql.yml/badge.svg)](https://github.com/alexandroit/stackline-stable-stringify/actions/workflows/codeql.yml)
-[![license](https://img.shields.io/npm/l/%40stackline%2Fstable-stringify)](LICENSE)
+> Deterministic, cycle-aware JSON serialization with a fast-json-stable-stringify-compatible API and RFC 8785 canonicalization
+
+[![npm version](https://img.shields.io/npm/v/@stackline/stable-stringify.svg?style=flat-square)](https://www.npmjs.com/package/@stackline/stable-stringify)
+[![license](https://img.shields.io/npm/l/@stackline/stable-stringify.svg?style=flat-square)](https://github.com/alexandroit/stackline-stable-stringify/blob/main/LICENSE)
+[![GitHub repository](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github)](https://github.com/alexandroit/stackline-stable-stringify)
+
+**[Documentation](https://alexandro.net/docs/vanilla/stable-stringify/)** |
+**[npm](https://www.npmjs.com/package/@stackline/stable-stringify)** |
+**[Issues](https://github.com/alexandroit/stackline-stable-stringify/issues)** |
+**[Repository](https://github.com/alexandroit/stackline-stable-stringify)**
+
+**Package version:** `1.0.3`
+
+## Why this package?
 
 Deterministic JSON serialization, safe diagnostics, and RFC 8785 canonical
 JSON in one zero-dependency package.
@@ -13,7 +23,9 @@ also handles circular arrays, deeply nested data without recursive call-stack
 failure, BigInt policies, resource limits, safe logging, and strict JSON
 Canonicalization Scheme output.
 
-## Why this package
+<a id="why-this-package"></a>
+
+### Why this package
 
 Stable serialization is infrastructure for cache keys, signatures, snapshots,
 deduplication, logs, and reproducible builds. The JavaScript ecosystem has
@@ -31,13 +43,51 @@ small, tested runtime while keeping the established call shape.
 - ESM, callable CommonJS, browser global, and TypeScript declarations;
 - zero runtime dependencies.
 
-## Install
+## Compatibility
+
+| Item | Value |
+| --- | --- |
+| Package | `@stackline/stable-stringify@1.0.3` |
+| Node.js runtime | `>=14.17.0` |
+| CommonJS / primary entry | `./dist/index.cjs` |
+| ES module entry | `./dist/index.js` |
+| Type declarations | `./dist/index.d.ts` |
+
+The default contract is tested against `fast-json-stable-stringify@2.1.0`.
+The regression suite includes 30,000 deterministic differential
+serializations across generated values and comparator forms.
+
+Intentional additions do not alter default output:
+
+- circular arrays are handled instead of overflowing the call stack;
+- very deep structures use an iterative task stack;
+- replacer, indentation, BigInt, accessor, and resource policies are opt-in;
+- safe and canonical modes are separate named APIs.
+
+See [compatibility details](https://github.com/alexandroit/stackline-stable-stringify/blob/main/docs/COMPATIBILITY.md) before replacing a
+serializer that relies on undocumented edge behavior.
+
+<a id="runtime-support"></a>
+
+### Runtime support
+
+The package is tested on Node.js 14.17 through current releases, Linux,
+Windows, macOS, Deno 2, Bun, and browsers. Type declarations are compiled in a
+matrix from TypeScript 3.9 through 7.0.
+
+## Installation
+
+<a id="install"></a>
+
+### Install
 
 ```bash
 npm install @stackline/stable-stringify
 ```
 
 Keep an existing package name and imports with an npm alias:
+
+## Usage
 
 ```bash
 npm install fast-json-stable-stringify@npm:@stackline/stable-stringify
@@ -47,7 +97,9 @@ npm install fast-json-stable-stringify@npm:@stackline/stable-stringify
 const stringify = require('fast-json-stable-stringify');
 ```
 
-## Quick start
+<a id="quick-start"></a>
+
+### Quick start
 
 ```js
 import stringify from '@stackline/stable-stringify';
@@ -62,7 +114,23 @@ stringify(first) === stringify(second); // true
 Arrays retain their input order. Object keys are sorted at every depth. Input
 objects are never mutated.
 
-## Safe serialization
+<a id="commonjs"></a>
+
+### CommonJS
+
+```js
+const stringify = require('@stackline/stable-stringify');
+
+stringify({ z: 1, a: 2 });
+stringify.safeStringify(value);
+stringify.canonicalize(value);
+```
+
+## Features and Integrations
+
+<a id="safe-serialization"></a>
+
+### Safe serialization
 
 `safeStringify` is intended for logs, diagnostics, and error reporting. It
 serializes BigInt as strings, marks cycles, and applies bounded defaults.
@@ -91,7 +159,9 @@ safeStringify(value, replacer, 2, {
 });
 ```
 
-## RFC 8785 canonical JSON
+<a id="rfc-8785-canonical-json"></a>
+
+### RFC 8785 canonical JSON
 
 Use `canonicalize` when bytes must be reproducible across systems, such as
 digital signatures, content-addressed storage, or cryptographic hashes.
@@ -120,9 +190,60 @@ I-JSON, including:
 It does not invoke getters or `toJSON`. Convert application objects to plain
 JSON data before canonicalization.
 
-## API
+<a id="browser"></a>
 
-### `stringify(value, options?)`
+### Browser
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@stackline/stable-stringify/dist/index.min.js"></script>
+<script>
+  const output = StacklineStableStringify({ z: 1, a: 2 });
+</script>
+```
+
+The browser global is callable and includes the same helper methods as the
+CommonJS export.
+
+<a id="performance"></a>
+
+### Performance
+
+Run the local comparison:
+
+```bash
+npm run benchmark
+```
+
+The benchmark reports native `JSON.stringify`,
+`fast-json-stable-stringify@2.1.0`, stable mode, safe mode, and RFC 8785 mode
+on the same payload. Native JSON is shown only as a throughput baseline; it
+does not recursively sort object keys. Measure with representative production
+data before selecting limits or modes.
+
+<a id="adoption-resources"></a>
+
+### Adoption resources
+
+- [Stable, safe, canonical, and drop-in adoption guide](https://github.com/alexandroit/stackline-stable-stringify/blob/main/docs/ADOPTION.md)
+- [Reproducible benchmark methodology](https://github.com/alexandroit/stackline-stable-stringify/blob/main/docs/BENCHMARKS.md)
+- [Executable examples](https://github.com/alexandroit/stackline-stable-stringify/blob/main/examples)
+- [Stackline open-source catalog](https://alexandro.net/docs/open-source/)
+
+The examples ship in the npm tarball and cover deterministic cache keys,
+canonical content digests, and bounded logging of cyclic BigInt data.
+
+## Security
+
+Read [SECURITY.md](https://github.com/alexandroit/stackline-stable-stringify/blob/main/SECURITY.md) for the supported versions, trust boundaries,
+resource-limit guidance, and private reporting process.
+
+## API Surface
+
+<a id="api"></a>
+
+### API
+
+#### `stringify(value, options?)`
 
 The default export and the named `stableStringify` and `stringify` exports are
 the same function.
@@ -139,7 +260,7 @@ Like `JSON.stringify`, a root `undefined`, function, or symbol returns
 `undefined`. Unsupported object properties are omitted and unsupported array
 items become `null`.
 
-### Stable options
+#### Stable options
 
 | Option | Default | Purpose |
 | :--- | :--- | :--- |
@@ -159,7 +280,7 @@ items become `null`.
 Unlimited defaults preserve compatibility. Apply explicit limits at exposed
 trust boundaries, or use `safeStringify`.
 
-### Cycle paths
+#### Cycle paths
 
 ```js
 const value = { id: 1 };
@@ -172,7 +293,7 @@ stringify(value, { onCycle: 'path' });
 Repeated sibling references are serialized normally; only references to an
 active ancestor are cycles.
 
-### Comparator
+#### Comparator
 
 ```js
 const descending = (left, right) =>
@@ -182,7 +303,7 @@ stringify({ a: 1, c: 3, b: 2 }, descending);
 // {"c":3,"b":2,"a":1}
 ```
 
-### `configure(defaults?)`
+#### `configure(defaults?)`
 
 Create a reusable serializer without rebuilding option objects at call sites.
 
@@ -200,81 +321,36 @@ cacheKey({ route: '/users', query: { page: 2 } });
 
 Per-call options override configured defaults.
 
-### Errors
+#### Errors
 
 `StableStringifyLimitError` extends `RangeError` and exposes `code`, `kind`,
 `limit`, and `path`. `CanonicalizationError` extends `TypeError` and exposes
 `code`, `reason`, and `path`.
 
-## CommonJS
+## Local Development
 
-```js
-const stringify = require('@stackline/stable-stringify');
-
-stringify({ z: 1, a: 2 });
-stringify.safeStringify(value);
-stringify.canonicalize(value);
+```sh
+git clone https://github.com/alexandroit/stackline-stable-stringify.git
+cd stackline-stable-stringify
+npm ci
+npm run test
 ```
 
-## Browser
+Release tooling uses Node.js 24.20.0 and npm 11.19.0. The consumer runtime contract remains the one documented above.
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/@stackline/stable-stringify/dist/index.min.js"></script>
-<script>
-  const output = StacklineStableStringify({ z: 1, a: 2 });
-</script>
+## Consumer Smoke Test
+
+Run the repository's existing consumer/package check after installing development dependencies:
+
+```sh
+npm run test:install
 ```
 
-The browser global is callable and includes the same helper methods as the
-CommonJS export.
+## Release Checklist
 
-## Compatibility
+<a id="verification"></a>
 
-The default contract is tested against `fast-json-stable-stringify@2.1.0`.
-The regression suite includes 30,000 deterministic differential
-serializations across generated values and comparator forms.
-
-Intentional additions do not alter default output:
-
-- circular arrays are handled instead of overflowing the call stack;
-- very deep structures use an iterative task stack;
-- replacer, indentation, BigInt, accessor, and resource policies are opt-in;
-- safe and canonical modes are separate named APIs.
-
-See [compatibility details](docs/COMPATIBILITY.md) before replacing a
-serializer that relies on undocumented edge behavior.
-
-## Runtime support
-
-The package is tested on Node.js 14.17 through current releases, Linux,
-Windows, macOS, Deno 2, Bun, and browsers. Type declarations are compiled in a
-matrix from TypeScript 3.9 through 7.0.
-
-## Performance
-
-Run the local comparison:
-
-```bash
-npm run benchmark
-```
-
-The benchmark reports native `JSON.stringify`,
-`fast-json-stable-stringify@2.1.0`, stable mode, safe mode, and RFC 8785 mode
-on the same payload. Native JSON is shown only as a throughput baseline; it
-does not recursively sort object keys. Measure with representative production
-data before selecting limits or modes.
-
-## Adoption resources
-
-- [Stable, safe, canonical, and drop-in adoption guide](docs/ADOPTION.md)
-- [Reproducible benchmark methodology](docs/BENCHMARKS.md)
-- [Executable examples](examples)
-- [Stackline open-source catalog](https://alexandro.net/docs/open-source/)
-
-The examples ship in the npm tarball and cover deterministic cache keys,
-canonical content digests, and bounded logging of cyclic BigInt data.
-
-## Verification
+### Verification
 
 Every release runs:
 
@@ -288,13 +364,19 @@ Every release runs:
 The [live playground](https://alexandro.net/docs/vanilla/stable-stringify/)
 runs the published browser bundle.
 
-## Security
+Run `npm run test` and inspect the package contents before release. Publish a new version through the [GitHub Actions publishing workflow](https://github.com/alexandroit/stackline-stable-stringify/actions/workflows/publish.yml), using the SHA-512 digest of the reviewed tarball. Verify the exact published version, tarball integrity, and npm provenance after the run.
 
-Read [SECURITY.md](SECURITY.md) for the supported versions, trust boundaries,
-resource-limit guidance, and private reporting process.
+## Community and Support
+
+Report reproducible package issues in the [issue tracker](https://github.com/alexandroit/stackline-stable-stringify/issues). Use the [security policy](https://github.com/alexandroit/stackline-stable-stringify/blob/main/SECURITY.md) for vulnerability reports.
+
+- [Stackline / Alexandro.Net](https://alexandro.net/)
+- [GitHub](https://github.com/alexandroit)
+- [Maintainer LinkedIn](https://www.linkedin.com/in/aleinfo/)
+- [Reddit community: r/Stackline](https://www.reddit.com/r/Stackline/)
 
 ## License
 
 MIT. This is an independent implementation and is not affiliated with or
-endorsed by the maintainers of the comparison packages. See [NOTICE](NOTICE)
+endorsed by the maintainers of the comparison packages. See [NOTICE](https://github.com/alexandroit/stackline-stable-stringify/blob/main/NOTICE)
 for attribution and compatibility context.
