@@ -1,0 +1,38 @@
+{
+  "repository": "alexandroit/stackline-stable-stringify",
+  "packages": [
+    {
+      "name": "@stackline/stable-stringify",
+      "path": "README.md",
+      "version": "1.0.4",
+      "baselineVersion": "1.0.3",
+      "keywords": [
+        "stackline",
+        "npm-package",
+        "stable-stringify",
+        "typescript",
+        "nodejs",
+        "stable-json",
+        "deterministic",
+        "canonical-json",
+        "rfc-8785",
+        "jcs",
+        "circular-json",
+        "safe-stringify",
+        "json",
+        "hash",
+        "cache-key",
+        "esm",
+        "commonjs",
+        "browser",
+        "zero-dependency",
+        "serialization"
+      ],
+      "homepage": "https://alexandro.net/docs/vanilla/stable-stringify/",
+      "baselineTarball": "https://registry.npmjs.org/@stackline/stable-stringify/-/stable-stringify-1.0.3.tgz",
+      "baselineIntegrity": "sha512-4jcDhKiDMaqbF1LKceJ5kaX6pultltToDq8oVxqaEjb9YAJg2Q3yOUZIsfaB6c0vPEkPJM7rzvo28Z7N+gcmqw==",
+      "expectedSha512": "d0e450953b273fe556537fccb8f2ac9cf4528307b0b37bd76ae78e12d183b472a3b74b379f097a77d858fdcb72177ecebdd81014a8006217a110be784b7d29bf",
+      "tag": "docs-stackline-stable-stringify-v1.0.4"
+    }
+  ]
+}
