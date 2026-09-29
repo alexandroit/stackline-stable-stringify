@@ -1,9 +1,13 @@
 {
   "name": "@stackline/stable-stringify",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Deterministic, cycle-aware JSON serialization with a fast-json-stable-stringify-compatible API and RFC 8785 canonicalization",
   "keywords": [
+    "stackline",
+    "npm-package",
     "stable-stringify",
+    "typescript",
+    "nodejs",
     "stable-json",
     "deterministic",
     "canonical-json",
@@ -14,12 +18,10 @@
     "json",
     "hash",
     "cache-key",
-    "typescript",
     "esm",
     "commonjs",
     "browser",
     "zero-dependency",
-    "stackline",
     "serialization"
   ],
   "license": "MIT",
