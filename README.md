@@ -10,7 +10,7 @@
 
 **[Documentation](https://alexandro.net/docs/vanilla/stable-stringify/)** | **[npm](https://www.npmjs.com/package/@stackline/stable-stringify)** | **[Issues](https://github.com/alexandroit/stackline-stable-stringify/issues)** | **[Repository](https://github.com/alexandroit/stackline-stable-stringify)**
 
-**Current package version:** `1.0.5`
+**Current package version:** `1.0.6`
 
 ---
 
@@ -48,7 +48,7 @@ small, tested runtime while keeping the established call shape.
 
 | Item | Value |
 | --- | --- |
-| Package | `@stackline/stable-stringify@1.0.5` |
+| Package | `@stackline/stable-stringify@1.0.6` |
 | Node.js runtime | `>=14.17.0` |
 | CommonJS / primary entry | `./dist/index.cjs` |
 | ES module entry | `./dist/index.js` |
